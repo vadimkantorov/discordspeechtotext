@@ -14,5 +14,5 @@ git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 python3 discord_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json
 ```
 
-### Credits
-Uses discord.py fork as a submodule: https://github.com/imayhaveborkedit/discord.py
+### Background
+Unfortunately, [discord.py](https://github.com/imayhaveborkedit/discord.py) does not support yet receiving voice (as opposed to [discord.js](https://github.com/discordjs/discord.js). In the meanwhile I use @imayhaveborkedit's [fork](https://github.com/imayhaveborkedit/discord.py). Hopefully, the changes will get merged upstream: https://github.com/Rapptz/discord.py/issues/1094, https://github.com/Rapptz/discord.py/issues/444
