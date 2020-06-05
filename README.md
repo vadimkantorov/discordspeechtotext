@@ -16,8 +16,7 @@ python3 discord_bot.py --discord-bot-token-file discordbottoken.txt --google-api
 # then in the text channel use commands:
 #  "!transcribeyes" to start transcribing - the bot will send transcriptions of sound in the voice channel to the text channel
 #  "!transcribenot" to stop transcribing
-
-# One can specify --text-channel-id and --voice-channel-id for better control
+# one can specify --text-channel-id and --voice-channel-id for better control
 ```
 
 ### Background
