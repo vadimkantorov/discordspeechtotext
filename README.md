@@ -10,7 +10,10 @@ apt-get install -y libopus-dev
 # clone with the submodule
 git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 
-# usage
+# make sure to dump audio to debugdir instead of transcription, the discord client may be buggy, sometimes audio is cranky
+python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.txt --debug debugdir --text-channel-name general --voice-channel-name General
+
+# run with google speech to text
 python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json --text-channel-name general --voice-channel-name General
 
 # then in the text channel use commands:
@@ -18,8 +21,6 @@ python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.t
 #  "!transcribenot" to stop transcribing
 # one can specify --text-channel-id and --voice-channel-id for better control
 
-# debug dump raw audio to debugdir
-python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.txt --debug debugdir --text-channel-name general --voice-channel-name General
 ```
 
 ### Background

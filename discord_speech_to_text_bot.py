@@ -48,7 +48,7 @@ class BufferAudioSink(discord.AudioSink):
 		self.NUM_CHANNELS = discord.opus.Decoder.CHANNELS
 		self.NUM_SAMPLES = discord.opus.Decoder.SAMPLES_PER_FRAME
 		self.SAMPLE_RATE_HZ = discord.opus.Decoder.SAMPLING_RATE
-		self.BUFFER_FRAME_COUNT = 200
+		self.BUFFER_FRAME_COUNT = 500
 		self.buffer = np.zeros(shape = (self.NUM_SAMPLES * self.BUFFER_FRAME_COUNT, self.NUM_CHANNELS), dtype = 'int16')
 		self.buffer_pointer = 0
 		self.speaker = None
@@ -67,8 +67,6 @@ class BufferAudioSink(discord.AudioSink):
 			self.speaker = speaker
 
 		if need_flush:
-			print(self.buffer_pointer, speaking)
-
 			pcm_s16le = self.buffer.tobytes()
 			self.buffer.fill(0)
 			self.buffer_pointer = 0
