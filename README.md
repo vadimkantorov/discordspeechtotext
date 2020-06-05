@@ -7,7 +7,7 @@ https://medium.com/voice-tech-podcast/how-to-make-a-discord-bot-with-python-e066
 pip install pynacl google-cloud-speech grpc # make sure numpy is installed
 apt-get install -y libopus-dev
 
-# install bot
+# clone with the submodule
 git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 
 # usage
