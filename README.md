@@ -20,4 +20,4 @@ python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.t
 ```
 
 ### Background
-Unfortunately, [discord.py](https://github.com/imayhaveborkedit/discord.py) does not support yet receiving voice (as opposed to [discord.js](https://github.com/discordjs/discord.js). In the meanwhile I use @imayhaveborkedit's excellent [fork](https://github.com/imayhaveborkedit/discord.py). Hopefully, the changes will get merged upstream: https://github.com/Rapptz/discord.py/issues/1094, https://github.com/Rapptz/discord.py/issues/444
+Unfortunately, [discord.py](https://github.com/imayhaveborkedit/discord.py) does not support yet receiving voice (as opposed to [discord.js](https://github.com/discordjs/discord.js)). In the meanwhile I use @imayhaveborkedit's excellent [fork](https://github.com/imayhaveborkedit/discord.py). Hopefully, the changes will get merged upstream: https://github.com/Rapptz/discord.py/issues/1094, https://github.com/Rapptz/discord.py/issues/444
