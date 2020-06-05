@@ -11,7 +11,7 @@ apt-get install -y libopus-dev
 git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 
 # usage
-python3 discord_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json --text-channel-id 715478110715248690 --voice-channel-id 715478138099990609
+python3 discord_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json
 ```
 
 ### Credits

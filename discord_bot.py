@@ -94,10 +94,10 @@ class DiscordBotClient(discord.Client):
 			self.messages = []
 
 	async def on_ready(self):
-		print('\n'.join(map(str, self.get_all_channels())))
+		print('\n'.join(map(repr, self.get_all_channels())))
 
 		self.text_channel = discord.utils.get(self.get_all_channels(), **(dict(id = self.text_channel_id) if self.text_channel_id is not None else dict(name = self.text_channel_name)))
-		self.voice_channel = discord.utils.get(self.get_all_channels(), **(dict(id = self.voice_channel_id) if self.voice_channel_id is not None else dict(name = self.voice_channel_name))
+		self.voice_channel = discord.utils.get(self.get_all_channels(), **(dict(id = self.voice_channel_id) if self.voice_channel_id is not None else dict(name = self.voice_channel_name)))
 			
 		print('Logged in to Discord as {} - ID {}'.format(self.user.name, self.user.id))
 		print('Ready to recieve commands!')
@@ -133,8 +133,8 @@ if __name__ == '__main__':
 	parser.add_argument('--lang', default = 'ru-RU', help = 'see http://g.co/cloud/speech/docs/languages for a list of supported languages')
 	parser.add_argument('--recognition-model', default = 'phone_call', choices = ['phone_call', 'default', 'video', 'command_and_search'])
 	parser.add_argument('--endpoint', default = google.cloud.speech_v1.SpeechClient.SERVICE_ADDRESS)
-	parser.add_argument('--text-channel-name', type = int, default = 'general')
-	parser.add_argument('--voice-channel-name', type = int, default = 'General')
+	parser.add_argument('--text-channel-name', default = 'general')
+	parser.add_argument('--voice-channel-name', default = 'General')
 	parser.add_argument('--text-channel-id', type = int)
 	parser.add_argument('--voice-channel-id', type = int)
 	args = parser.parse_args()
