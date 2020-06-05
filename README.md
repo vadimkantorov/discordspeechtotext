@@ -1,13 +1,13 @@
 ### How to create and configure a Discord bot
 https://medium.com/voice-tech-podcast/how-to-make-a-discord-bot-with-python-e066b03bfd9
 
-### Installation
+### Installation and usage
 ```shell
 # install dependencies
 pip install pynacl google-cloud-speech grpc # make sure numpy is installed
 apt-get install -y libopus-dev
 
-# install bot
+# clone with the submodule
 git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 
 # usage
@@ -23,4 +23,4 @@ python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.t
 ```
 
 ### Background
-Unfortunately, [discord.py](https://github.com/imayhaveborkedit/discord.py) does not support yet receiving voice (as opposed to [discord.js](https://github.com/discordjs/discord.js). In the meanwhile I use @imayhaveborkedit's [fork](https://github.com/imayhaveborkedit/discord.py). Hopefully, the changes will get merged upstream: https://github.com/Rapptz/discord.py/issues/1094, https://github.com/Rapptz/discord.py/issues/444
+Unfortunately, [discord.py](https://github.com/Rapptz/discord.py) does not support yet receiving voice (as opposed to [discord.js](https://github.com/discordjs/discord.js)). In the meanwhile I use @imayhaveborkedit's excellent [fork](https://github.com/imayhaveborkedit/discord.py). Hopefully, the changes will get merged upstream: https://github.com/Rapptz/discord.py/issues/1094, https://github.com/Rapptz/discord.py/issues/444
