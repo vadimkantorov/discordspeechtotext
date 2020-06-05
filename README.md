@@ -1,7 +1,7 @@
 ### How to create and configure a Discord bot
 https://medium.com/voice-tech-podcast/how-to-make-a-discord-bot-with-python-e066b03bfd9
 
-### Installation
+### Installation and usage
 ```shell
 # install dependencies
 pip install pynacl google-cloud-speech grpc # make sure numpy is installed
