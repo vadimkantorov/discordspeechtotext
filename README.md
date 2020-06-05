@@ -12,6 +12,12 @@ git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 
 # usage
 python3 discord_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json
+
+# then use commands: 
+#  "!transcribeyes" to start transcribing
+#  "!transcribenot" to stop transcribing
+
+# By default it uses "general" text channel and "General" voice channel. You can specify --text-channel-id and --voice-channel-id for better control
 ```
 
 ### Background
