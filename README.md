@@ -11,7 +11,7 @@ apt-get install -y libopus-dev
 git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
 
 # usage
-python3 discord_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json --text-channel-name general --voice-channel-name General
+python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.txt --google-api-credentials-file googleapikeycredentials.json --text-channel-name general --voice-channel-name General
 
 # then in the text channel use commands:
 #  "!transcribeyes" to start transcribing - the bot will send transcriptions of sound in the voice channel to the text channel
