@@ -2,7 +2,9 @@
 import sys; sys.path.insert(0, 'discord.py')
 
 import argparse
+import os
 import time
+import random
 import asyncio
 import numpy as np
 import discord
@@ -26,6 +28,17 @@ class GoogleSpeechToText:
 		hyp = res.results[0].alternatives[0].transcript if len(res.results) > 0 else ''
 		return hyp
 
+class DebugDumpRawAudio:
+	def __init__(self, debug_dir):
+		os.makedirs(debug_dir, exist_ok = True)
+		self.debug_dir = debug_dir
+
+	def transcribe(self, pcm_s16le, sample_rate, num_channels):
+		audio_path = os.path.join(self.debug_dir, f'{int(time.time()).{random.randint(1000, 9999)}._s16le_hz{sample_rate}_ch{num_channels}.raw')
+		with open(audio_path, 'wb') as f:
+			f.write(pcm_s16le)
+		print('ffplay -f s16le -ar {sample_rate} -ac {num_channels} "{audio_path}"')
+
 class BufferAudioSink(discord.AudioSink):
 	def __init__(self, flush):
 		self.flush = flush
@@ -43,14 +56,15 @@ class BufferAudioSink(discord.AudioSink):
 		speaker = voice_data.user.id
 		frame = np.ndarray(shape = (self.NUM_SAMPLES, self.NUM_CHANNELS), dtype = self.buffer.dtype, buffer = voice_data.data)
 		speaking = np.abs(frame).sum() > 0
-		need_flush = (self.buffer_pointer + 1 == self.BUFFER_FRAME_COUNT) or (not speaking and self.buffer_pointer > 0) or (self.speaker is not None and speaker != self.speaker)
+		need_flush = (self.buffer_pointer >= self.BUFFER_FRAME_COUNT - 2) or (not speaking and self.buffer_pointer > 0.5 * self.BUFFER_FRAME_COUNT) #or (self.speaker is not None and speaker != self.speaker)
 
-		if speaking:
-			self.buffer[(self.buffer_pointer * self.NUM_SAMPLES) : ((1 + self.buffer_pointer) * self.NUM_SAMPLES)] = frame
-			self.buffer_pointer += 1
-			self.speaker = speaker
+		self.buffer[(self.buffer_pointer * self.NUM_SAMPLES) : ((1 + self.buffer_pointer) * self.NUM_SAMPLES)] = frame
+		self.buffer_pointer += 1
+		self.speaker = speaker
 
 		if need_flush:
+			print(self.buffer_pointer, speaking)
+
 			pcm_s16le = self.buffer.tobytes()
 			self.buffer.fill(0)
 			self.buffer_pointer = 0
@@ -76,7 +90,7 @@ class DiscordBotClient(discord.Client):
 
 	def transcribe(self, speaker, pcm_s16le, sample_rate, num_channels):
 		hyp = self.transcriber.transcribe(pcm_s16le, sample_rate, num_channels)
-		print('Transcribing', hyp)
+		print('Transcribing', '[', hyp, ']')
 		if hyp:
 			self.messages.append((speaker, hyp)) 
 
@@ -130,6 +144,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--discord-bot-token-file', required = True)
 	parser.add_argument('--google-api-credentials-file', required = True)
+	parser.add_arugment('--debug', help = 'debug dir')
 	parser.add_argument('--lang', default = 'ru-RU', help = 'see http://g.co/cloud/speech/docs/languages for a list of supported languages')
 	parser.add_argument('--recognition-model', default = 'phone_call', choices = ['phone_call', 'default', 'video', 'command_and_search'])
 	parser.add_argument('--endpoint', default = google.cloud.speech_v1.SpeechClient.SERVICE_ADDRESS)
@@ -141,6 +156,6 @@ if __name__ == '__main__':
 
 	discord_bot_token = open(args.discord_bot_token_file).read().strip()
 
-	transcriber = GoogleSpeechToText(endpoint = args.endpoint, recognition_model = args.recognition_model, lang = args.lang, api_credentials = args.google_api_credentials_file)
+	transcriber = GoogleSpeechToText(endpoint = args.endpoint, recognition_model = args.recognition_model, lang = args.lang, api_credentials = args.google_api_credentials_file) if not args.debug else DebugDumpRawAudio(args.debug)
 	bot = DiscordBotClient(text_channel_id = args.text_channel_id, voice_channel_id = args.voice_channel_id, text_channel_name = args.text_channel_name, voice_channel_name = args.voice_channel_name, transcriber = transcriber)
 	bot.run(discord_bot_token)

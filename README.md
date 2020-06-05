@@ -17,6 +17,9 @@ python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.t
 #  "!transcribeyes" to start transcribing - the bot will send transcriptions of sound in the voice channel to the text channel
 #  "!transcribenot" to stop transcribing
 # one can specify --text-channel-id and --voice-channel-id for better control
+
+# debug dump raw audio to debugdir
+python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.txt --debug debugdir --text-channel-name general --voice-channel-name General
 ```
 
 ### Background
