@@ -1,0 +1,3 @@
+[submodule "discord.py"]
+	path = discord.py
+	url = https://github.com/imayhaveborkedit/discord.py
