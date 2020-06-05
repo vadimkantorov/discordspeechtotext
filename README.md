@@ -1,6 +1,8 @@
 ```
-pip install discord.py pynacl
+pip install pynacl
 apt-get install libopus-dev
-```
 
-Voice receiving functionality for discord bot is by https://github.com/imayhaveborkedit/discord.py/tree/voice-recv-mk2/discord 
+git clone --branch voice-recv-mk2 --single-branch https://github.com/imayhaveborkedit/discord.py
+pushd discord.py
+pip install .
+```
