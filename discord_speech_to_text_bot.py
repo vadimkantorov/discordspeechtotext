@@ -3,6 +3,7 @@ import sys; sys.path.insert(0, 'discord.py')
 
 import argparse
 import os
+import wave
 import time
 import random
 import asyncio
@@ -34,10 +35,12 @@ class DebugDumpRawAudio:
 		self.debug_dir = debug_dir
 
 	def transcribe(self, pcm_s16le, sample_rate, num_channels):
-		audio_path = os.path.join(self.debug_dir, f'{int(time.time()).{random.randint(1000, 9999)}._s16le_hz{sample_rate}_ch{num_channels}.raw')
-		with open(audio_path, 'wb') as f:
-			f.write(pcm_s16le)
-		print('ffplay -f s16le -ar {sample_rate} -ac {num_channels} "{audio_path}"')
+		audio_path = os.path.join(self.debug_dir, f'{int(time.time()).{random.randint(1000, 9999)}._s16le_hz{sample_rate}_ch{num_channels}.wav')
+		with wave.open(audio_path, 'wb') as w:
+			w.setnchannels(num_channels)
+			w.setsampwidth(16 // 8)
+			w.setframerate(sample_rate)
+			w.writeframes(pcm_s16le)
 
 class BufferAudioSink(discord.AudioSink):
 	def __init__(self, flush):
