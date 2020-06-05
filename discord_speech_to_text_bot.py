@@ -35,7 +35,7 @@ class DebugDumpRawAudio:
 		self.debug_dir = debug_dir
 
 	def transcribe(self, pcm_s16le, sample_rate, num_channels):
-		audio_path = os.path.join(self.debug_dir, f'{int(time.time()).{random.randint(1000, 9999)}._s16le_hz{sample_rate}_ch{num_channels}.wav')
+		audio_path = os.path.join(self.debug_dir, f'{int(time.time())}.{random.randint(1000, 9999)}._s16le_hz{sample_rate}_ch{num_channels}.wav')
 		with wave.open(audio_path, 'wb') as w:
 			w.setnchannels(num_channels)
 			w.setsampwidth(16 // 8)
@@ -61,9 +61,10 @@ class BufferAudioSink(discord.AudioSink):
 		speaking = np.abs(frame).sum() > 0
 		need_flush = (self.buffer_pointer >= self.BUFFER_FRAME_COUNT - 2) or (not speaking and self.buffer_pointer > 0.5 * self.BUFFER_FRAME_COUNT) #or (self.speaker is not None and speaker != self.speaker)
 
-		self.buffer[(self.buffer_pointer * self.NUM_SAMPLES) : ((1 + self.buffer_pointer) * self.NUM_SAMPLES)] = frame
-		self.buffer_pointer += 1
-		self.speaker = speaker
+		if speaking:
+			self.buffer[(self.buffer_pointer * self.NUM_SAMPLES) : ((1 + self.buffer_pointer) * self.NUM_SAMPLES)] = frame
+			self.buffer_pointer += 1
+			self.speaker = speaker
 
 		if need_flush:
 			print(self.buffer_pointer, speaking)
@@ -147,7 +148,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--discord-bot-token-file', required = True)
 	parser.add_argument('--google-api-credentials-file', required = True)
-	parser.add_arugment('--debug', help = 'debug dir')
+	parser.add_argument('--debug', help = 'debug dir')
 	parser.add_argument('--lang', default = 'ru-RU', help = 'see http://g.co/cloud/speech/docs/languages for a list of supported languages')
 	parser.add_argument('--recognition-model', default = 'phone_call', choices = ['phone_call', 'default', 'video', 'command_and_search'])
 	parser.add_argument('--endpoint', default = google.cloud.speech_v1.SpeechClient.SERVICE_ADDRESS)
