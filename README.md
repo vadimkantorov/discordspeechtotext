@@ -1,15 +1,19 @@
 ### How to create and configure a Discord bot
 https://medium.com/voice-tech-podcast/how-to-make-a-discord-bot-with-python-e066b03bfd9
 
-### Installation and usage
+### Installation
 ```shell
 # install dependencies
-pip install pynacl google-cloud-speech grpc # make sure numpy is installed
+# make sure numpy is installed
+pip install pynacl google-cloud-speech grpc
 apt-get install -y libopus-dev
 
 # clone with the submodule
 git clone --recursive https://github.com/vadimkantorov/discordspeechtotext
+```
 
+### Usage
+```shell
 # make sure to dump audio to debugdir instead of transcription, the discord client may be buggy, sometimes audio is cranky
 python3 discord_speech_to_text_bot.py --discord-bot-token-file discordbottoken.txt --debug debugdir --text-channel-name general --voice-channel-name General
 
